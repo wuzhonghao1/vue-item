@@ -1,47 +1,39 @@
 <template>
-  <div class="hello">
-
+  <div id="hello">
+    <p>这里是{{data.city}}天气</p>
+    <p>{{data.WD}}：{{data.WSE}}</p>
+    <p>气压：{{data.AP}}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  name: 'HelloWorld',
-  data () {
+  name: "HelloWorld",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      data1:[]
-    }
+      msg: "Vue.js Project!",
+      data: {}
+    };
   },
-  created(){
-    this.add()
+  created() {
+    fetch("/data/sk/101110101.html")
+      .then(response => response.json())
+      .then(data => {
+        this.data = data.weatherinfo;
+      });
   },
-  methods:{
-    add:()=>{
-      fetch("/data/sk/101110101.html")
-      .then(response=> response.json())
-      .then(data=> console.log(data))
-       
+  methods: {
+    onclick() {
+      console.log(this.data);
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+#hello{
+	text-align: center;
 }
 </style>
